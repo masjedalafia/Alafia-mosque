@@ -22,6 +22,10 @@
             --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
         
+        * {
+            box-sizing: border-box;
+        }
+        
         body {
             font-family: 'Tajawal', sans-serif;
             background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
@@ -29,6 +33,7 @@
             padding: 0;
             color: var(--dark-color);
             min-height: 100vh;
+            line-height: 1.6;
         }
         
         .container {
@@ -47,20 +52,6 @@
             box-shadow: var(--box-shadow);
             position: relative;
             overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .logo {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid white;
         }
         
         .header-content {
@@ -72,23 +63,13 @@
             margin: 0;
             padding: 10px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            font-size: 2.2rem;
         }
         
         .header p {
             font-size: 1.2rem;
             margin: 10px 0 0;
             opacity: 0.9;
-        }
-        
-        .welcome-message {
-            background-color: white;
-            padding: 20px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            margin-bottom: 30px;
-            text-align: center;
-            font-size: 1.2rem;
-            border-right: 5px solid var(--accent-color);
         }
         
         .tabs {
@@ -99,14 +80,17 @@
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
             overflow: hidden;
+            flex-wrap: wrap;
         }
         
         .tab {
-            padding: 15px 30px;
+            padding: 15px 25px;
             cursor: pointer;
             font-weight: 500;
             transition: all 0.3s ease;
             border-bottom: 3px solid transparent;
+            flex-grow: 1;
+            text-align: center;
         }
         
         .tab:hover {
@@ -186,28 +170,12 @@
             box-shadow: 0 0 0 3px rgba(21, 152, 149, 0.2);
         }
         
-        .input-icon {
-            position: relative;
-        }
-        
-        .input-icon i {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--accent-color);
-        }
-        
-        .input-icon input {
-            padding-right: 15px;
-            padding-left: 40px;
-        }
-        
         .buttons {
             display: flex;
             gap: 15px;
             margin-top: 20px;
             justify-content: flex-end;
+            flex-wrap: wrap;
         }
         
         button {
@@ -255,22 +223,6 @@
         
         .btn-danger:hover {
             background-color: #c0392b;
-        }
-        
-        .btn-view {
-            background: var(--accent-color);
-            color: white;
-            padding: 8px 15px;
-            border-radius: var(--border-radius);
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-view:hover {
-            background: var(--primary-color);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         
         .search-container {
@@ -323,12 +275,14 @@
             display: flex;
             gap: 8px;
             justify-content: center;
+            flex-wrap: wrap;
         }
         
         .action-btn {
             padding: 6px 12px;
             font-size: 0.9rem;
             border-radius: 4px;
+            cursor: pointer;
         }
         
         .edit-btn {
@@ -376,26 +330,6 @@
             margin-bottom: 20px;
         }
         
-        .pagination {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-            gap: 5px;
-        }
-        
-        .page-btn {
-            padding: 8px 15px;
-            background-color: #f1f1f1;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        
-        .page-btn.active {
-            background-color: var(--accent-color);
-            color: white;
-        }
-        
         .logout-btn {
             position: absolute;
             top: 20px;
@@ -417,24 +351,11 @@
             font-size: 0.9rem;
         }
         
-        .admin-only {
-            display: none;
-        }
-        
-        .admin-section {
-            border: 2px solid #1a5f7a;
-            padding: 20px;
-            border-radius: 10px;
+        .export-options {
+            display: flex;
+            gap: 10px;
             margin-bottom: 20px;
-            background-color: #f8f9fa;
-        }
-        
-        .owner-section {
-            border: 2px solid #8e44ad;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            background-color: #f5eef8;
+            flex-wrap: wrap;
         }
         
         .export-btn {
@@ -454,18 +375,6 @@
             border-right: 4px solid var(--accent-color);
         }
         
-        .export-options {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-        
-        .export-group-btn {
-            background-color: #6c757d;
-            color: white;
-        }
-        
         .settings-section {
             margin-bottom: 30px;
         }
@@ -482,26 +391,10 @@
             color: var(--primary-color);
         }
         
-        .group-badge {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 20px;
-            background-color: rgba(21, 152, 149, 0.1);
-            color: var(--primary-color);
-            font-size: 0.9rem;
-            margin: 5px;
-        }
-        
         .alert {
             padding: 10px;
             border-radius: var(--border-radius);
             margin: 10px 0;
-        }
-        
-        .alert-warning {
-            background-color: rgba(241, 196, 15, 0.2);
-            border-right: 3px solid var(--warning-color);
-            color: var(--warning-color);
         }
         
         .alert-success {
@@ -514,80 +407,6 @@
             background-color: rgba(231, 76, 60, 0.2);
             border-right: 3px solid var(--danger-color);
             color: var(--danger-color);
-        }
-        
-        .student-page {
-            background: white;
-            padding: 20px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            margin-bottom: 30px;
-            display: none;
-        }
-        
-        .student-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 15px;
-        }
-        
-        .student-details {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        
-        .detail-item {
-            padding: 10px;
-            background: #f8f9fa;
-            border-radius: var(--border-radius);
-        }
-        
-        .detail-item strong {
-            color: var(--primary-color);
-            margin-left: 5px;
-        }
-        
-        .back-btn {
-            background: var(--primary-color);
-            color: white;
-            padding: 8px 15px;
-            border-radius: var(--border-radius);
-            text-decoration: none;
-            display: inline-block;
-        }
-        
-        .error-message {
-            color: var(--danger-color);
-            font-size: 0.9rem;
-            margin-top: 5px;
-        }
-        
-        .input-error {
-            border-color: var(--danger-color) !important;
-        }
-        
-        .pages-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            max-height: 150px;
-            overflow-y: auto;
-            padding: 10px;
-            border: 1px solid #eee;
-            border-radius: var(--border-radius);
-        }
-        
-        .page-badge {
-            background-color: var(--accent-color);
-            color: white;
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-size: 0.8rem;
         }
         
         .stats-grid {
@@ -645,14 +464,6 @@
         .group-actions {
             display: flex;
             gap: 5px;
-        }
-        
-        .report-container {
-            background: white;
-            padding: 20px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            margin-bottom: 20px;
         }
         
         .progress-bar {
@@ -778,17 +589,33 @@
             font-size: 0.9rem;
         }
         
+        .owner-section {
+            border: 2px solid #8e44ad;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            background-color: #f5eef8;
+        }
+        
+        .admin-section {
+            border: 2px solid #1a5f7a;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            background-color: #f8f9fa;
+        }
+        
         @media (max-width: 768px) {
             .form-grid {
                 grid-template-columns: 1fr;
             }
             
             .header h1 {
-                font-size: 2rem;
+                font-size: 1.8rem;
             }
             
             .tab {
-                padding: 12px 20px;
+                padding: 12px;
                 font-size: 0.9rem;
             }
             
@@ -805,7 +632,9 @@
             .logout-btn, .user-info {
                 position: static;
                 margin: 10px 0;
-                display: inline-block;
+                display: block;
+                width: 100%;
+                text-align: center;
             }
             
             .groups-management {
@@ -856,7 +685,7 @@
                 </button>
             </div>
             
-            <div class="login-device" id="device-info">
+            <div class="login-device">
                 <i class="fas fa-info-circle"></i> يمكنك تسجيل الدخول من أي جهاز متصل بالإنترنت
             </div>
         </div>
@@ -902,72 +731,34 @@
             
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-value">42</div>
+                    <div class="stat-value" id="total-students">0</div>
                     <div class="stat-title">عدد الطلاب</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-value">28</div>
+                    <div class="stat-value" id="excellent-students">0</div>
                     <div class="stat-title">طلاب ممتازين</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-value">12</div>
+                    <div class="stat-value" id="verygood-students">0</div>
                     <div class="stat-title">طلاب جيد جداً</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-value">2</div>
+                    <div class="stat-value" id="needs-attention">0</div>
                     <div class="stat-title">طلاب بحاجة متابعة</div>
                 </div>
             </div>
             
             <h2>أحدث المتابعات</h2>
             <div class="followup-container">
-                <div class="followup-history">
-                    <div class="followup-item">
-                        <strong>عمر أحمد</strong> - جزء عم (الصفحات 1-3) - التقييم: ممتاز
-                        <div class="detail-item">التاريخ: 2023-10-05</div>
-                    </div>
-                    <div class="followup-item">
-                        <strong>محمد خالد</strong> - جزء تبارك (الصفحات 4-6) - التقييم: جيد جداً
-                        <div class="detail-item">التاريخ: 2023-10-05</div>
-                    </div>
-                    <div class="followup-item">
-                        <strong>سارة عبدالله</strong> - جزء قد سمع (الصفحات 7-10) - التقييم: ممتاز
-                        <div class="detail-item">التاريخ: 2023-10-04</div>
-                    </div>
+                <div class="followup-history" id="recent-followups">
+                    <!-- سيتم تعبئته بالجافاسكريبت -->
                 </div>
             </div>
             
             <h2>تقدم الحفظ الشهري</h2>
             <div class="report-container">
-                <div class="evaluation-grid">
-                    <div class="evaluation-card">
-                        <h3>جزء عم</h3>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 85%">85%</div>
-                        </div>
-                        <div>عدد الطلاب: 38</div>
-                    </div>
-                    <div class="evaluation-card">
-                        <h3>جزء تبارك</h3>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 72%">72%</div>
-                        </div>
-                        <div>عدد الطلاب: 32</div>
-                    </div>
-                    <div class="evaluation-card">
-                        <h3>جزء قد سمع</h3>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 65%">65%</div>
-                        </div>
-                        <div>عدد الطلاب: 28</div>
-                    </div>
-                    <div class="evaluation-card">
-                        <h3>جزء المجادلة</h3>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 48%">48%</div>
-                        </div>
-                        <div>عدد الطلاب: 22</div>
-                    </div>
+                <div class="evaluation-grid" id="progress-grid">
+                    <!-- سيتم تعبئته بالجافاسكريبت -->
                 </div>
             </div>
         </div>
@@ -978,7 +769,7 @@
             
             <div class="search-container">
                 <div class="search-box">
-                    <input type="text" id="student-search" placeholder="ابحث عن طالب...">
+                    <input type="text" id="student-search" placeholder="ابحث عن طالب..." oninput="searchStudents()">
                     <button class="btn-primary"><i class="fas fa-search"></i> بحث</button>
                 </div>
             </div>
@@ -1030,6 +821,7 @@
             
             <div class="admin-section">
                 <h3>قائمة الطلاب</h3>
+                <div class="alert alert-success" id="students-message" style="display: none;"></div>
                 <table>
                     <thead>
                         <tr>
@@ -1041,51 +833,13 @@
                             <th>الإجراءات</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>عمر أحمد</td>
-                            <td>15</td>
-                            <td>المجموعة الأولى</td>
-                            <td><span class="status-badge status-excellent">ممتاز</span></td>
-                            <td>جزء تبارك (صفحات 10-15)</td>
-                            <td class="actions">
-                                <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
-                                <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
-                                <button class="action-btn btn-primary"><i class="fas fa-eye"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>محمد خالد</td>
-                            <td>14</td>
-                            <td>المجموعة الثانية</td>
-                            <td><span class="status-badge status-very-good">جيد جداً</span></td>
-                            <td>جزء عم (صفحات 5-8)</td>
-                            <td class="actions">
-                                <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
-                                <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
-                                <button class="action-btn btn-primary"><i class="fas fa-eye"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>سارة عبدالله</td>
-                            <td>16</td>
-                            <td>المجموعة الأولى</td>
-                            <td><span class="status-badge status-excellent">ممتاز</span></td>
-                            <td>جزء قد سمع (صفحات 20-25)</td>
-                            <td class="actions">
-                                <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
-                                <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
-                                <button class="action-btn btn-primary"><i class="fas fa-eye"></i></button>
-                            </td>
-                        </tr>
+                    <tbody id="students-table-body">
+                        <!-- سيتم تعبئته بالجافاسكريبت -->
                     </tbody>
                 </table>
                 
-                <div class="pagination">
-                    <button class="page-btn active">1</button>
-                    <button class="page-btn">2</button>
-                    <button class="page-btn">3</button>
-                    <button class="page-btn">التالي</button>
+                <div class="pagination" id="students-pagination">
+                    <!-- سيتم تعبئته بالجافاسكريبت -->
                 </div>
             </div>
         </div>
@@ -1101,13 +855,13 @@
             <div class="form-grid">
                 <div class="form-group">
                     <label for="followup-date">التاريخ:</label>
-                    <input type="date" id="followup-date" value="2023-10-05">
+                    <input type="date" id="followup-date" value="">
                 </div>
                 <div class="form-group">
                     <label for="followup-group">المجموعة:</label>
                     <select id="followup-group">
                         <option value="">اختر مجموعة</option>
-                        <option value="1" selected>المجموعة الأولى</option>
+                        <option value="1">المجموعة الأولى</option>
                         <option value="2">المجموعة الثانية</option>
                         <option value="3">المجموعة الثالثة</option>
                     </select>
@@ -1121,9 +875,7 @@
                         <label for="followup-student">الطالب:</label>
                         <select id="followup-student">
                             <option value="">اختر طالب</option>
-                            <option value="1">عمر أحمد</option>
-                            <option value="2">محمد خالد</option>
-                            <option value="3">سارة عبدالله</option>
+                            <!-- سيتم تعبئته بالجافاسكريبت -->
                         </select>
                     </div>
                     <div class="form-group">
@@ -1133,6 +885,7 @@
                             <option value="30">جزء عم</option>
                             <option value="29">جزء تبارك</option>
                             <option value="28">جزء قد سمع</option>
+                            <option value="27">الجزء 27</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -1165,25 +918,8 @@
             
             <h3>سجل المتابعات</h3>
             <div class="followup-container">
-                <div class="followup-history">
-                    <div class="followup-item">
-                        <strong>عمر أحمد</strong> - جزء عم (الصفحات 1-3) 
-                        <div>التقييم: <span class="status-badge status-excellent">ممتاز</span></div>
-                        <div>التاريخ: 2023-10-05</div>
-                        <div>ملاحظات: الحفظ متقن والتلاوة جيدة جداً</div>
-                    </div>
-                    <div class="followup-item">
-                        <strong>محمد خالد</strong> - جزء تبارك (الصفحات 4-6) 
-                        <div>التقييم: <span class="status-badge status-very-good">جيد جداً</span></div>
-                        <div>التاريخ: 2023-10-05</div>
-                        <div>ملاحظات: يحتاج تحسين في مخارج الحروف</div>
-                    </div>
-                    <div class="followup-item">
-                        <strong>سارة عبدالله</strong> - جزء قد سمع (الصفحات 7-10) 
-                        <div>التقييم: <span class="status-badge status-excellent">ممتاز</span></div>
-                        <div>التاريخ: 2023-10-04</div>
-                        <div>ملاحظات: أداء ممتاز وحفظ متقن</div>
-                    </div>
+                <div class="followup-history" id="followups-history">
+                    <!-- سيتم تعبئته بالجافاسكريبت -->
                 </div>
             </div>
         </div>
@@ -1193,9 +929,15 @@
             <h2>التقارير والإحصائيات</h2>
             
             <div class="export-options">
-                <button class="btn-primary export-btn"><i class="fas fa-file-pdf"></i> تصدير PDF</button>
-                <button class="btn-primary export-btn"><i class="fas fa-file-excel"></i> تصدير Excel</button>
-                <button class="btn-primary"><i class="fas fa-print"></i> طباعة</button>
+                <button class="btn-primary export-btn" onclick="exportToPDF()">
+                    <i class="fas fa-file-pdf"></i> تصدير PDF
+                </button>
+                <button class="btn-primary export-btn" onclick="exportToExcel()">
+                    <i class="fas fa-file-excel"></i> تصدير Excel
+                </button>
+                <button class="btn-primary">
+                    <i class="fas fa-print"></i> طباعة
+                </button>
             </div>
             
             <div class="report-container">
@@ -1204,16 +946,14 @@
                     <div class="form-group">
                         <label for="report-student">الطالب:</label>
                         <select id="report-student">
-                            <option value="">اختر طالب</option>
-                            <option value="1">عمر أحمد</option>
-                            <option value="2">محمد خالد</option>
-                            <option value="3">سارة عبدالله</option>
+                            <option value="">جميع الطلاب</option>
+                            <!-- سيتم تعبئته بالجافاسكريبت -->
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="report-group">المجموعة:</label>
                         <select id="report-group">
-                            <option value="">اختر مجموعة</option>
+                            <option value="">جميع المجموعات</option>
                             <option value="1">المجموعة الأولى</option>
                             <option value="2">المجموعة الثانية</option>
                             <option value="3">المجموعة الثالثة</option>
@@ -1230,61 +970,19 @@
                     </div>
                     <div class="form-group">
                         <label for="report-date">الفترة:</label>
-                        <input type="month" id="report-date" value="2023-10">
+                        <input type="month" id="report-date" value="">
                     </div>
                 </div>
                 
                 <div class="buttons">
-                    <button class="btn-primary">
+                    <button class="btn-primary" onclick="generateReport()">
                         <i class="fas fa-chart-bar"></i> توليد التقرير
                     </button>
                 </div>
             </div>
             
-            <div class="report-container">
-                <h3>إحصائيات الحفظ</h3>
-                <div class="evaluation-grid">
-                    <div class="evaluation-card">
-                        <h3>إجمالي الطلاب</h3>
-                        <div class="stat-value">42</div>
-                    </div>
-                    <div class="evaluation-card">
-                        <h3>متوسط الصفحات المحفوظة</h3>
-                        <div class="stat-value">65</div>
-                    </div>
-                    <div class="evaluation-card">
-                        <h3>أعلى تقييم</h3>
-                        <div class="stat-value">28</div>
-                        <div>طلاب ممتازين</div>
-                    </div>
-                    <div class="evaluation-card">
-                        <h3>أقل تقييم</h3>
-                        <div class="stat-value">2</div>
-                        <div>طلاب بحاجة متابعة</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="report-container">
-                <h3>تقدم الحفظ حسب المجموعات</h3>
-                <div class="form-group">
-                    <label>المجموعة الأولى</label>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 78%">78%</div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>المجموعة الثانية</label>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 65%">65%</div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>المجموعة الثالثة</label>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 52%">52%</div>
-                    </div>
-                </div>
+            <div class="report-container" id="report-results">
+                <!-- سيتم عرض نتائج التقرير هنا -->
             </div>
         </div>
         
@@ -1292,7 +990,7 @@
         <div id="settings" class="tab-content">
             <h2>إعدادات النظام</h2>
             
-            <div class="owner-section">
+            <div class="owner-section" id="admin-management">
                 <h3><i class="fas fa-users"></i> إدارة المشرفين</h3>
                 
                 <div class="form-grid">
@@ -1311,7 +1009,7 @@
                 </div>
                 
                 <div class="buttons">
-                    <button class="btn-primary">
+                    <button class="btn-primary" onclick="addAdmin()">
                         <i class="fas fa-user-plus"></i> إضافة مشرف جديد
                     </button>
                 </div>
@@ -1326,25 +1024,8 @@
                             <th>الإجراءات</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>أحمد محمد</td>
-                            <td>ahmed@alafia.com</td>
-                            <td>2023-01-15</td>
-                            <td class="actions">
-                                <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
-                                <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>محمد علي</td>
-                            <td>mohammed@alafia.com</td>
-                            <td>2023-03-22</td>
-                            <td class="actions">
-                                <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
-                                <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
-                            </td>
-                        </tr>
+                    <tbody id="admins-table-body">
+                        <!-- سيتم تعبئته بالجافاسكريبت -->
                     </tbody>
                 </table>
             </div>
@@ -1365,43 +1046,14 @@
                         </div>
                         
                         <div class="buttons">
-                            <button class="btn-primary">إضافة مجموعة</button>
+                            <button class="btn-primary" onclick="addGroup()">إضافة مجموعة</button>
                         </div>
                     </div>
                     
                     <div>
                         <h4>المجموعات الحالية</h4>
-                        <div class="group-list">
-                            <div class="group-item">
-                                <div>
-                                    <strong>المجموعة الأولى</strong>
-                                    <div>مجموعة متقدمة في الحفظ</div>
-                                </div>
-                                <div class="group-actions">
-                                    <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
-                                    <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
-                                </div>
-                            </div>
-                            <div class="group-item">
-                                <div>
-                                    <strong>المجموعة الثانية</strong>
-                                    <div>مجموعة متوسطة في الحفظ</div>
-                                </div>
-                                <div class="group-actions">
-                                    <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
-                                    <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
-                                </div>
-                            </div>
-                            <div class="group-item">
-                                <div>
-                                    <strong>المجموعة الثالثة</strong>
-                                    <div>مجموعة مبتدئة في الحفظ</div>
-                                </div>
-                                <div class="group-actions">
-                                    <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
-                                    <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
-                                </div>
-                            </div>
+                        <div class="group-list" id="groups-list">
+                            <!-- سيتم تعبئته بالجافاسكريبت -->
                         </div>
                     </div>
                 </div>
@@ -1434,14 +1086,15 @@
                 </div>
                 
                 <div class="buttons">
-                    <button class="btn-primary">حفظ الإعدادات</button>
+                    <button class="btn-primary" onclick="saveEvaluationSettings()">حفظ الإعدادات</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // بيانات المستخدمين المسموح لهم بالدخول
+        // ============== بيانات النظام ==============
+        // بيانات المستخدمين
         const users = {
             admin: { password: "admin123", role: "admin", name: "أحمد محمد" },
             owner: { password: "owner123", role: "owner", name: "مالك النظام" },
@@ -1449,26 +1102,241 @@
             supervisor2: { password: "super456", role: "admin", name: "سارة عبدالله" }
         };
         
-        // معلومات الجهاز الحالي
-        function getDeviceInfo() {
-            const userAgent = navigator.userAgent;
-            let deviceType = "جهاز غير معروف";
-            
-            if (/Android/i.test(userAgent)) {
-                deviceType = "جهاز أندرويد";
-            } else if (/iPhone|iPad|iPod/i.test(userAgent)) {
-                deviceType = "جهاز آبل";
-            } else if (/Windows/i.test(userAgent)) {
-                deviceType = "جهاز ويندوز";
-            } else if (/Mac/i.test(userAgent)) {
-                deviceType = "جهاز ماك";
-            } else if (/Linux/i.test(userAgent)) {
-                deviceType = "جهاز لينكس";
-            }
-            
-            return deviceType;
+        // بيانات الطلاب
+        let students = JSON.parse(localStorage.getItem('students')) || [
+            { id: 1, name: "عمر أحمد", age: 15, group: "المجموعة الأولى", evaluation: "excellent", current: "جزء تبارك (صفحات 10-15)", startDate: "2023-01-10", phone: "0551234567", notes: "طالب مجتهد" },
+            { id: 2, name: "محمد خالد", age: 14, group: "المجموعة الثانية", evaluation: "very-good", current: "جزء عم (صفحات 5-8)", startDate: "2023-02-15", phone: "0557654321", notes: "يحتاج متابعة" },
+            { id: 3, name: "سارة عبدالله", age: 16, group: "المجموعة الأولى", evaluation: "excellent", current: "جزء قد سمع (صفحات 20-25)", startDate: "2023-03-01", phone: "0551122334", notes: "متميزة في الحفظ" }
+        ];
+        
+        // بيانات المجموعات
+        let groups = JSON.parse(localStorage.getItem('groups')) || [
+            { id: 1, name: "المجموعة الأولى", description: "مجموعة متقدمة في الحفظ" },
+            { id: 2, name: "المجموعة الثانية", description: "مجموعة متوسطة في الحفظ" },
+            { id: 3, name: "المجموعة الثالثة", description: "مجموعة مبتدئة في الحفظ" }
+        ];
+        
+        // بيانات المشرفين
+        let admins = JSON.parse(localStorage.getItem('admins')) || [
+            { id: 1, name: "أحمد محمد", email: "ahmed@alafia.com", joinDate: "2023-01-15" },
+            { id: 2, name: "محمد علي", email: "mohammed@alafia.com", joinDate: "2023-03-22" }
+        ];
+        
+        // بيانات المتابعات
+        let followups = JSON.parse(localStorage.getItem('followups')) || [
+            { id: 1, studentId: 1, studentName: "عمر أحمد", part: "جزء عم", pages: "1-3", evaluation: "excellent", date: "2023-10-05", notes: "الحفظ متقن والتلاوة جيدة جداً" },
+            { id: 2, studentId: 2, studentName: "محمد خالد", part: "جزء تبارك", pages: "4-6", evaluation: "very-good", date: "2023-10-05", notes: "يحتاج تحسين في مخارج الحروف" },
+            { id: 3, studentId: 3, studentName: "سارة عبدالله", part: "جزء قد سمع", pages: "7-10", evaluation: "excellent", date: "2023-10-04", notes: "أداء ممتاز وحفظ متقن" }
+        ];
+        
+        // بيانات الإعدادات
+        let settings = JSON.parse(localStorage.getItem('settings')) || {
+            excellent: 95,
+            veryGood: 85,
+            good: 75,
+            weak: 0
+        };
+        
+        // ============== وظائف النظام ==============
+        // حفظ البيانات في التخزين المحلي
+        function saveData() {
+            localStorage.setItem('students', JSON.stringify(students));
+            localStorage.setItem('groups', JSON.stringify(groups));
+            localStorage.setItem('admins', JSON.stringify(admins));
+            localStorage.setItem('followups', JSON.stringify(followups));
+            localStorage.setItem('settings', JSON.stringify(settings));
         }
         
+        // تحديث الواجهة
+        function updateUI() {
+            renderStudentsTable();
+            renderFollowupsHistory();
+            renderRecentFollowups();
+            renderStats();
+            renderGroupsList();
+            renderAdminsTable();
+            renderProgressGrid();
+            populateStudentDropdown();
+            populateReportStudentDropdown();
+        }
+        
+        // ============== إدارة الطلاب ==============
+        // عرض نموذج إضافة طالب
+        function showAddStudentForm() {
+            document.getElementById('add-student-form').style.display = 'block';
+        }
+        
+        // إخفاء نموذج إضافة طالب
+        function hideAddStudentForm() {
+            document.getElementById('add-student-form').style.display = 'none';
+        }
+        
+        // إضافة طالب جديد
+        function addStudent() {
+            const name = document.getElementById('student-name').value;
+            const age = document.getElementById('student-age').value;
+            const phone = document.getElementById('student-phone').value;
+            const group = document.getElementById('student-group').value;
+            const startDate = document.getElementById('student-start').value;
+            const notes = document.getElementById('student-notes').value;
+            
+            if (!name || !age || !group) {
+                showMessage('students-message', 'الرجاء ملء جميع الحقول المطلوبة', 'error');
+                return;
+            }
+            
+            const newStudent = {
+                id: Date.now(),
+                name,
+                age,
+                phone,
+                group: document.querySelector(`#student-group option[value="${group}"]`).textContent,
+                evaluation: "good",
+                current: "لم يبدأ بعد",
+                startDate,
+                notes
+            };
+            
+            students.push(newStudent);
+            saveData();
+            renderStudentsTable();
+            hideAddStudentForm();
+            showMessage('students-message', `تم إضافة الطالب ${name} بنجاح`, 'success');
+        }
+        
+        // البحث عن الطلاب
+        function searchStudents() {
+            const searchTerm = document.getElementById('student-search').value.toLowerCase();
+            renderStudentsTable(searchTerm);
+        }
+        
+        // عرض رسالة
+        function showMessage(elementId, message, type) {
+            const messageDiv = document.getElementById(elementId);
+            messageDiv.textContent = message;
+            messageDiv.className = 'alert';
+            messageDiv.classList.add(type === 'success' ? 'alert-success' : 'alert-error');
+            messageDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+            }, 5000);
+        }
+        
+        // ============== المتابعة اليومية ==============
+        // حفظ المتابعة
+        function saveFollowup() {
+            const studentId = document.getElementById('followup-student').value;
+            const part = document.getElementById('followup-part').value;
+            const pages = document.getElementById('followup-pages').value;
+            const evaluation = document.getElementById('followup-evaluation').value;
+            const notes = document.getElementById('followup-notes').value;
+            const date = document.getElementById('followup-date').value || new Date().toISOString().split('T')[0];
+            
+            if (!studentId || !part || !pages || !evaluation) {
+                alert('الرجاء ملء جميع الحقول المطلوبة');
+                return;
+            }
+            
+            const student = students.find(s => s.id == studentId);
+            if (!student) return;
+            
+            const newFollowup = {
+                id: Date.now(),
+                studentId,
+                studentName: student.name,
+                part: document.querySelector(`#followup-part option[value="${part}"]`).textContent,
+                pages,
+                evaluation,
+                date,
+                notes
+            };
+            
+            followups.push(newFollowup);
+            saveData();
+            renderFollowupsHistory();
+            renderRecentFollowups();
+            
+            // إعادة تعيين النموذج
+            document.getElementById('followup-student').value = '';
+            document.getElementById('followup-part').value = '';
+            document.getElementById('followup-pages').value = '';
+            document.getElementById('followup-evaluation').value = '';
+            document.getElementById('followup-notes').value = '';
+            
+            alert('تم حفظ المتابعة بنجاح');
+        }
+        
+        // ============== الإعدادات ==============
+        // إضافة مشرف جديد
+        function addAdmin() {
+            const name = document.getElementById('new-admin-name').value;
+            const email = document.getElementById('new-admin-email').value;
+            const password = document.getElementById('new-admin-password').value;
+            
+            if (!name || !email || !password) {
+                alert('الرجاء ملء جميع الحقول المطلوبة');
+                return;
+            }
+            
+            const newAdmin = {
+                id: Date.now(),
+                name,
+                email,
+                joinDate: new Date().toISOString().split('T')[0]
+            };
+            
+            admins.push(newAdmin);
+            saveData();
+            renderAdminsTable();
+            
+            // إعادة تعيين النموذج
+            document.getElementById('new-admin-name').value = '';
+            document.getElementById('new-admin-email').value = '';
+            document.getElementById('new-admin-password').value = '';
+            
+            alert('تم إضافة المشرف بنجاح');
+        }
+        
+        // إضافة مجموعة جديدة
+        function addGroup() {
+            const name = document.getElementById('group-name').value;
+            const description = document.getElementById('group-description').value;
+            
+            if (!name) {
+                alert('الرجاء إدخال اسم المجموعة');
+                return;
+            }
+            
+            const newGroup = {
+                id: Date.now(),
+                name,
+                description
+            };
+            
+            groups.push(newGroup);
+            saveData();
+            renderGroupsList();
+            
+            // إعادة تعيين النموذج
+            document.getElementById('group-name').value = '';
+            document.getElementById('group-description').value = '';
+            
+            alert('تم إضافة المجموعة بنجاح');
+        }
+        
+        // حفظ إعدادات التقييم
+        function saveEvaluationSettings() {
+            settings.excellent = parseInt(document.getElementById('eval-excellent').value) || 95;
+            settings.veryGood = parseInt(document.getElementById('eval-very-good').value) || 85;
+            settings.good = parseInt(document.getElementById('eval-good').value) || 75;
+            settings.weak = parseInt(document.getElementById('eval-weak').value) || 0;
+            
+            saveData();
+            alert('تم حفظ إعدادات التقييم بنجاح');
+        }
+        
+        // ============== تسجيل الدخول ==============
         // تحديد نوع المستخدم
         function selectLoginType(userType) {
             const adminType = document.getElementById('admin-type');
@@ -1483,54 +1351,42 @@
             }
         }
         
-        // عرض رسالة تسجيل الدخول
-        function showLoginMessage(message, type) {
-            const messageDiv = document.getElementById('login-message');
-            messageDiv.textContent = message;
-            messageDiv.className = 'alert';
-            
-            if (type === 'success') {
-                messageDiv.classList.add('alert-success');
-            } else if (type === 'error') {
-                messageDiv.classList.add('alert-error');
-            }
-        }
-        
         // تسجيل الدخول
         function login() {
             const username = document.getElementById('username').value.trim();
             const password = document.getElementById('password').value;
-            const deviceInfo = document.getElementById('device-info');
             const userType = document.querySelector('.login-type.active').id;
-            
-            // تحديث معلومات الجهاز
-            deviceInfo.innerHTML = `<i class="fas fa-info-circle"></i> تسجيل الدخول من: ${getDeviceInfo()}`;
+            const isOwner = userType === 'owner-type';
             
             // التحقق من صحة المستخدم
-            if (userType === 'owner-type' && username === 'owner' && password === users.owner.password) {
+            if (isOwner && username === 'owner' && password === users.owner.password) {
                 showLoginMessage('تم تسجيل دخول المالك بنجاح', 'success');
                 setTimeout(() => {
                     document.getElementById('auth-container').style.display = 'none';
                     document.getElementById('app-container').style.display = 'block';
                     document.getElementById('username-display').textContent = `مالك النظام: ${users.owner.name}`;
                     document.getElementById('welcome-text').textContent = `مرحباً بك يا مالك النظام في نظام جامع العافية`;
+                    document.getElementById('admin-management').style.display = 'block';
+                    updateUI();
                 }, 1000);
             } 
-            else if (userType === 'admin-type' && users[username] && password === users[username].password) {
+            else if (!isOwner && users[username] && password === users[username].password) {
                 showLoginMessage(`تم تسجيل دخول المشرف ${users[username].name} بنجاح`, 'success');
                 setTimeout(() => {
                     document.getElementById('auth-container').style.display = 'none';
                     document.getElementById('app-container').style.display = 'block';
                     document.getElementById('username-display').textContent = `مشرف: ${users[username].name}`;
                     document.getElementById('welcome-text').textContent = `مرحباً بك يا ${users[username].name} في نظام جامع العافية`;
+                    document.getElementById('admin-management').style.display = 'none';
+                    updateUI();
                 }, 1000);
             } 
             else {
-                // رسالة خطأ
                 showLoginMessage('بيانات الدخول غير صحيحة! الرجاء المحاولة مرة أخرى', 'error');
             }
         }
         
+        // تسجيل الخروج
         function logout() {
             document.getElementById('auth-container').style.display = 'block';
             document.getElementById('app-container').style.display = 'none';
@@ -1540,7 +1396,16 @@
             document.getElementById('login-message').className = 'alert';
         }
         
-        // تبديل بين التبويبات
+        // عرض رسالة تسجيل الدخول
+        function showLoginMessage(message, type) {
+            const messageDiv = document.getElementById('login-message');
+            messageDiv.textContent = message;
+            messageDiv.className = 'alert';
+            messageDiv.classList.add(type === 'success' ? 'alert-success' : 'alert-error');
+        }
+        
+        // ============== وظائف التبويبات ==============
+        // فتح تبويب
         function openTab(tabName) {
             // إخفاء جميع محتويات التبويبات
             const tabContents = document.getElementsByClassName('tab-content');
@@ -1559,70 +1424,327 @@
             
             // إضافة النشط للتبويب المحدد
             event.currentTarget.classList.add('active');
-        }
-        
-        // إدارة الطلاب
-        function showAddStudentForm() {
-            document.getElementById('add-student-form').style.display = 'block';
-        }
-        
-        function hideAddStudentForm() {
-            document.getElementById('add-student-form').style.display = 'none';
-        }
-        
-        function addStudent() {
-            const name = document.getElementById('student-name').value;
-            const age = document.getElementById('student-age').value;
-            const group = document.getElementById('student-group').value;
             
-            if(name && age && group) {
-                alert(`تم إضافة الطالب ${name} بنجاح`);
-                hideAddStudentForm();
-                // إعادة تعيين النموذج
-                document.getElementById('student-name').value = '';
-                document.getElementById('student-age').value = '';
-                document.getElementById('student-phone').value = '';
-                document.getElementById('student-group').value = '';
-                document.getElementById('student-start').value = '';
-                document.getElementById('student-notes').value = '';
-            } else {
-                alert('الرجاء ملء جميع الحقول المطلوبة');
+            // تحديث البيانات عند فتح التبويب
+            if (tabName === 'students') renderStudentsTable();
+            if (tabName === 'followup') renderFollowupsHistory();
+            if (tabName === 'reports') generateReport();
+            if (tabName === 'settings') {
+                renderGroupsList();
+                renderAdminsTable();
             }
         }
         
-        // حفظ المتابعة
-        function saveFollowup() {
-            const student = document.getElementById('followup-student').value;
-            const part = document.getElementById('followup-part').value;
-            const pages = document.getElementById('followup-pages').value;
-            const evaluation = document.getElementById('followup-evaluation').value;
+        // ============== وظائف التصيير ==============
+        // تصيير جدول الطلاب
+        function renderStudentsTable(searchTerm = '') {
+            const tableBody = document.getElementById('students-table-body');
+            tableBody.innerHTML = '';
             
-            if(student && part && pages && evaluation) {
-                alert('تم حفظ المتابعة بنجاح');
-                // إعادة تعيين النموذج
-                document.getElementById('followup-student').value = '';
-                document.getElementById('followup-part').value = '';
-                document.getElementById('followup-pages').value = '';
-                document.getElementById('followup-evaluation').value = '';
-                document.getElementById('followup-notes').value = '';
-            } else {
-                alert('الرجاء ملء جميع الحقول المطلوبة');
+            const filteredStudents = students.filter(student => 
+                student.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                student.group.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            
+            if (filteredStudents.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="empty-state">
+                            <i class="fas fa-user-slash"></i>
+                            <div>لا يوجد طلاب مسجلين</div>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            filteredStudents.forEach(student => {
+                let statusClass = '';
+                if (student.evaluation === 'excellent') statusClass = 'status-excellent';
+                if (student.evaluation === 'very-good') statusClass = 'status-very-good';
+                if (student.evaluation === 'good') statusClass = 'status-good';
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${student.name}</td>
+                    <td>${student.age}</td>
+                    <td>${student.group}</td>
+                    <td><span class="status-badge ${statusClass}">${getEvaluationText(student.evaluation)}</span></td>
+                    <td>${student.current}</td>
+                    <td class="actions">
+                        <button class="action-btn edit-btn" onclick="editStudent(${student.id})"><i class="fas fa-edit"></i></button>
+                        <button class="action-btn delete-btn" onclick="deleteStudent(${student.id})"><i class="fas fa-trash"></i></button>
+                        <button class="action-btn btn-primary" onclick="viewStudent(${student.id})"><i class="fas fa-eye"></i></button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+        
+        // تصيير سجل المتابعات
+        function renderFollowupsHistory() {
+            const container = document.getElementById('followups-history');
+            container.innerHTML = '';
+            
+            if (followups.length === 0) {
+                container.innerHTML = `<div class="empty-state"><i class="fas fa-clipboard-list"></i> لا توجد متابعات مسجلة</div>`;
+                return;
+            }
+            
+            followups.slice().reverse().forEach(followup => {
+                let statusClass = '';
+                if (followup.evaluation === 'excellent') statusClass = 'status-excellent';
+                if (followup.evaluation === 'very-good') statusClass = 'status-very-good';
+                if (followup.evaluation === 'good') statusClass = 'status-good';
+                
+                const item = document.createElement('div');
+                item.className = 'followup-item';
+                item.innerHTML = `
+                    <strong>${followup.studentName}</strong> - ${followup.part} (الصفحات ${followup.pages}) 
+                    <div>التقييم: <span class="status-badge ${statusClass}">${getEvaluationText(followup.evaluation)}</span></div>
+                    <div>التاريخ: ${followup.date}</div>
+                    <div>ملاحظات: ${followup.notes}</div>
+                    <div class="actions" style="margin-top: 10px;">
+                        <button class="action-btn edit-btn" onclick="editFollowup(${followup.id})"><i class="fas fa-edit"></i></button>
+                        <button class="action-btn delete-btn" onclick="deleteFollowup(${followup.id})"><i class="fas fa-trash"></i></button>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+        }
+        
+        // تصيير أحدث المتابعات
+        function renderRecentFollowups() {
+            const container = document.getElementById('recent-followups');
+            container.innerHTML = '';
+            
+            const recent = followups.slice(-3).reverse();
+            
+            if (recent.length === 0) {
+                container.innerHTML = `<div class="empty-state"><i class="fas fa-clipboard-list"></i> لا توجد متابعات حديثة</div>`;
+                return;
+            }
+            
+            recent.forEach(followup => {
+                let statusClass = '';
+                if (followup.evaluation === 'excellent') statusClass = 'status-excellent';
+                if (followup.evaluation === 'very-good') statusClass = 'status-very-good';
+                
+                const item = document.createElement('div');
+                item.className = 'followup-item';
+                item.innerHTML = `
+                    <strong>${followup.studentName}</strong> - ${followup.part} (الصفحات ${followup.pages}) - التقييم: <span class="${statusClass}">${getEvaluationText(followup.evaluation)}</span>
+                    <div class="detail-item">التاريخ: ${followup.date}</div>
+                `;
+                container.appendChild(item);
+            });
+        }
+        
+        // تصيير الإحصائيات
+        function renderStats() {
+            document.getElementById('total-students').textContent = students.length;
+            document.getElementById('excellent-students').textContent = students.filter(s => s.evaluation === 'excellent').length;
+            document.getElementById('verygood-students').textContent = students.filter(s => s.evaluation === 'very-good').length;
+            document.getElementById('needs-attention').textContent = students.filter(s => s.evaluation === 'weak' || s.evaluation === 'good').length;
+        }
+        
+        // تصيير تقدم الحفظ
+        function renderProgressGrid() {
+            const container = document.getElementById('progress-grid');
+            container.innerHTML = '';
+            
+            const parts = [
+                { name: "جزء عم", students: 38, progress: 85 },
+                { name: "جزء تبارك", students: 32, progress: 72 },
+                { name: "جزء قد سمع", students: 28, progress: 65 },
+                { name: "جزء المجادلة", students: 22, progress: 48 }
+            ];
+            
+            parts.forEach(part => {
+                const card = document.createElement('div');
+                card.className = 'evaluation-card';
+                card.innerHTML = `
+                    <h3>${part.name}</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${part.progress}%">${part.progress}%</div>
+                    </div>
+                    <div>عدد الطلاب: ${part.students}</div>
+                `;
+                container.appendChild(card);
+            });
+        }
+        
+        // تصيير قائمة المجموعات
+        function renderGroupsList() {
+            const container = document.getElementById('groups-list');
+            container.innerHTML = '';
+            
+            if (groups.length === 0) {
+                container.innerHTML = `<div class="empty-state"><i class="fas fa-users-slash"></i> لا توجد مجموعات</div>`;
+                return;
+            }
+            
+            groups.forEach(group => {
+                const item = document.createElement('div');
+                item.className = 'group-item';
+                item.innerHTML = `
+                    <div>
+                        <strong>${group.name}</strong>
+                        <div>${group.description}</div>
+                    </div>
+                    <div class="group-actions">
+                        <button class="action-btn edit-btn" onclick="editGroup(${group.id})"><i class="fas fa-edit"></i></button>
+                        <button class="action-btn delete-btn" onclick="deleteGroup(${group.id})"><i class="fas fa-trash"></i></button>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+        }
+        
+        // تصيير جدول المشرفين
+        function renderAdminsTable() {
+            const tableBody = document.getElementById('admins-table-body');
+            tableBody.innerHTML = '';
+            
+            if (admins.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="4" class="empty-state">
+                            <i class="fas fa-user-slash"></i>
+                            <div>لا يوجد مشرفين مسجلين</div>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            admins.forEach(admin => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${admin.name}</td>
+                    <td>${admin.email}</td>
+                    <td>${admin.joinDate}</td>
+                    <td class="actions">
+                        <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
+                        <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+        
+        // تعبئة قائمة الطلاب في المتابعة
+        function populateStudentDropdown() {
+            const select = document.getElementById('followup-student');
+            select.innerHTML = '<option value="">اختر طالب</option>';
+            
+            students.forEach(student => {
+                const option = document.createElement('option');
+                option.value = student.id;
+                option.textContent = student.name;
+                select.appendChild(option);
+            });
+        }
+        
+        // تعبئة قائمة الطلاب في التقارير
+        function populateReportStudentDropdown() {
+            const select = document.getElementById('report-student');
+            select.innerHTML = '<option value="">جميع الطلاب</option>';
+            
+            students.forEach(student => {
+                const option = document.createElement('option');
+                option.value = student.id;
+                option.textContent = student.name;
+                select.appendChild(option);
+            });
+        }
+        
+        // توليد التقرير
+        function generateReport() {
+            const container = document.getElementById('report-results');
+            container.innerHTML = `
+                <h3>نتائج التقرير</h3>
+                <div class="evaluation-grid">
+                    <div class="evaluation-card">
+                        <h3>إجمالي الطلاب</h3>
+                        <div class="stat-value">${students.length}</div>
+                    </div>
+                    <div class="evaluation-card">
+                        <h3>متوسط الصفحات المحفوظة</h3>
+                        <div class="stat-value">65</div>
+                    </div>
+                    <div class="evaluation-card">
+                        <h3>أعلى تقييم</h3>
+                        <div class="stat-value">${students.filter(s => s.evaluation === 'excellent').length}</div>
+                        <div>طلاب ممتازين</div>
+                    </div>
+                    <div class="evaluation-card">
+                        <h3>أقل تقييم</h3>
+                        <div class="stat-value">${students.filter(s => s.evaluation === 'weak').length}</div>
+                        <div>طلاب بحاجة متابعة</div>
+                    </div>
+                </div>
+                
+                <h3 style="margin-top: 30px;">تقدم الحفظ حسب المجموعات</h3>
+                <div class="form-group">
+                    <label>المجموعة الأولى</label>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 78%">78%</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>المجموعة الثانية</label>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 65%">65%</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>المجموعة الثالثة</label>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 52%">52%</div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // التصدير إلى PDF
+        function exportToPDF() {
+            alert('تم تصدير التقرير بصيغة PDF بنجاح');
+            // هنا سيتم تنفيذ تصدير PDF فعلي
+        }
+        
+        // التصدير إلى Excel
+        function exportToExcel() {
+            alert('تم تصدير التقرير بصيغة Excel بنجاح');
+            // هنا سيتم تنفيذ تصدير Excel فعلي
+        }
+        
+        // الحصول على نص التقييم
+        function getEvaluationText(evaluation) {
+            switch(evaluation) {
+                case 'excellent': return 'ممتاز';
+                case 'very-good': return 'جيد جداً';
+                case 'good': return 'جيد';
+                case 'weak': return 'ضعيف';
+                default: return 'غير محدد';
             }
         }
         
-        // تهيئة النظام
+        // ============== تهيئة النظام ==============
         document.addEventListener('DOMContentLoaded', function() {
             // تعيين التاريخ الحالي لحقول التاريخ
             const today = new Date().toISOString().split('T')[0];
             const currentMonth = new Date().toISOString().slice(0, 7);
             
-            if(document.getElementById('followup-date')) {
-                document.getElementById('followup-date').value = today;
-            }
+            document.getElementById('followup-date').value = today;
+            document.getElementById('report-date').value = currentMonth;
+            document.getElementById('student-start').value = today;
             
-            if(document.getElementById('report-date')) {
-                document.getElementById('report-date').value = currentMonth;
-            }
+            // تهيئة إعدادات التقييم
+            document.getElementById('eval-excellent').value = settings.excellent;
+            document.getElementById('eval-very-good').value = settings.veryGood;
+            document.getElementById('eval-good').value = settings.good;
+            document.getElementById('eval-weak').value = settings.weak;
         });
     </script>
 </body>
