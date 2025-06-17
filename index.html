@@ -429,6 +429,14 @@
             background-color: #f8f9fa;
         }
         
+        .owner-section {
+            border: 2px solid #8e44ad;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            background-color: #f5eef8;
+        }
+        
         .export-btn {
             background-color: #6c757d;
             color: white;
@@ -704,25 +712,70 @@
             border-left: 4px solid var(--accent-color);
         }
         
-        .login-message {
-            text-align: center;
-            padding: 15px;
-            margin: 15px 0;
+        .login-container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 30px;
+            background: white;
             border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
         }
         
-        .login-attempts {
+        .login-header {
             text-align: center;
-            margin-top: 15px;
-            font-size: 0.9rem;
-            color: #777;
+            margin-bottom: 30px;
+        }
+        
+        .login-header h1 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .login-type-selector {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .login-type {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #eee;
+            border-radius: var(--border-radius);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .login-type.active {
+            border-color: var(--accent-color);
+            background-color: rgba(21, 152, 149, 0.1);
+        }
+        
+        .login-type i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--accent-color);
+        }
+        
+        .login-fields {
+            margin-bottom: 20px;
+        }
+        
+        .login-actions {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
         }
         
         .login-device {
             text-align: center;
-            margin-top: 10px;
-            font-size: 0.85rem;
-            color: #999;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: var(--border-radius);
+            color: #777;
+            font-size: 0.9rem;
         }
         
         @media (max-width: 768px) {
@@ -758,52 +811,58 @@
             .groups-management {
                 grid-template-columns: 1fr;
             }
+            
+            .login-type-selector {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- واجهة تسجيل الدخول -->
     <div class="container" id="auth-container">
-        <div class="header">
-            <h1>نظام جامع العافية</h1>
-            <p>نظام متابعة حفظ القرآن الكريم وتقييم الطلاب</p>
-        </div>
-        
-        <div class="auth-section" id="login-section">
-            <h2><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</h2>
+        <div class="login-container">
+            <div class="login-header">
+                <h1><i class="fas fa-book-quran"></i> نظام جامع العافية</h1>
+                <p>نظام متابعة حفظ القرآن الكريم وتقييم الطلاب</p>
+            </div>
             
-            <div id="login-message" class="login-message"></div>
+            <div class="alert" id="login-message"></div>
+            
+            <div class="login-type-selector">
+                <div class="login-type active" id="admin-type" onclick="selectLoginType('admin')">
+                    <i class="fas fa-user-tie"></i>
+                    <div>مشرف</div>
+                </div>
+                <div class="login-type" id="owner-type" onclick="selectLoginType('owner')">
+                    <i class="fas fa-user-shield"></i>
+                    <div>مالك</div>
+                </div>
+            </div>
             
             <div class="form-group">
-                <label for="login-type">نوع المستخدم:</label>
-                <select id="login-type" class="form-control" onchange="toggleLoginFields()">
-                    <option value="admin">مشرف</option>
-                    <option value="owner">مالك</option>
-                </select>
+                <label for="username"><i class="fas fa-user"></i> اسم المستخدم:</label>
+                <input type="text" id="username" placeholder="أدخل اسم المستخدم">
             </div>
             
-            <div class="form-group" id="admin-login-section">
-                <label for="admin-username"><i class="fas fa-user"></i> اسم المستخدم:</label>
-                <input type="text" id="admin-username" placeholder="أدخل اسم المستخدم">
-                
-                <label for="admin-password"><i class="fas fa-lock"></i> كلمة المرور:</label>
-                <input type="password" id="admin-password" placeholder="أدخل كلمة المرور">
+            <div class="form-group">
+                <label for="password"><i class="fas fa-lock"></i> كلمة المرور:</label>
+                <input type="password" id="password" placeholder="أدخل كلمة المرور">
             </div>
             
-            <div class="buttons">
+            <div class="login-actions">
                 <button class="btn-primary" onclick="login()">
                     <i class="fas fa-sign-in-alt"></i> تسجيل الدخول
                 </button>
             </div>
             
-            <div class="login-attempts">
-                يمكنك تسجيل الدخول من أي جهاز متصل بالإنترنت
-            </div>
             <div class="login-device" id="device-info">
-                <!-- سيتم تعبئته بالجافاسكريبت -->
+                <i class="fas fa-info-circle"></i> يمكنك تسجيل الدخول من أي جهاز متصل بالإنترنت
             </div>
         </div>
     </div>
 
+    <!-- الواجهة الرئيسية للنظام -->
     <div class="container" id="app-container" style="display: none;">
         <button class="logout-btn" onclick="logout()">
             <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
@@ -1233,8 +1292,65 @@
         <div id="settings" class="tab-content">
             <h2>إعدادات النظام</h2>
             
+            <div class="owner-section">
+                <h3><i class="fas fa-users"></i> إدارة المشرفين</h3>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="new-admin-name">اسم المشرف الجديد:</label>
+                        <input type="text" id="new-admin-name" placeholder="أدخل الاسم الكامل">
+                    </div>
+                    <div class="form-group">
+                        <label for="new-admin-email">البريد الإلكتروني:</label>
+                        <input type="email" id="new-admin-email" placeholder="أدخل البريد الإلكتروني">
+                    </div>
+                    <div class="form-group">
+                        <label for="new-admin-password">كلمة المرور:</label>
+                        <input type="password" id="new-admin-password" placeholder="أدخل كلمة المرور">
+                    </div>
+                </div>
+                
+                <div class="buttons">
+                    <button class="btn-primary">
+                        <i class="fas fa-user-plus"></i> إضافة مشرف جديد
+                    </button>
+                </div>
+                
+                <h4>قائمة المشرفين</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>اسم المشرف</th>
+                            <th>البريد الإلكتروني</th>
+                            <th>تاريخ التسجيل</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>أحمد محمد</td>
+                            <td>ahmed@alafia.com</td>
+                            <td>2023-01-15</td>
+                            <td class="actions">
+                                <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
+                                <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>محمد علي</td>
+                            <td>mohammed@alafia.com</td>
+                            <td>2023-03-22</td>
+                            <td class="actions">
+                                <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
+                                <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
             <div class="admin-section">
-                <h3>إدارة المجموعات</h3>
+                <h3><i class="fas fa-object-group"></i> إدارة المجموعات</h3>
                 
                 <div class="groups-management">
                     <div>
@@ -1292,7 +1408,7 @@
             </div>
             
             <div class="admin-section">
-                <h3>إعدادات التقييم</h3>
+                <h3><i class="fas fa-star"></i> إعدادات التقييم</h3>
                 
                 <div class="form-grid">
                     <div class="form-group">
@@ -1320,49 +1436,6 @@
                 <div class="buttons">
                     <button class="btn-primary">حفظ الإعدادات</button>
                 </div>
-            </div>
-            
-            <div class="admin-section">
-                <h3>إدارة المستخدمين</h3>
-                
-                <table>
-                    <thead>
-                        <tr>
-                            <th>اسم المستخدم</th>
-                            <th>الدور</th>
-                            <th>تاريخ الإنشاء</th>
-                            <th>الإجراءات</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>ahmed@alafia.com</td>
-                            <td>مشرف</td>
-                            <td>2023-01-15</td>
-                            <td class="actions">
-                                <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
-                                <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>mohammed@alafia.com</td>
-                            <td>مشرف</td>
-                            <td>2023-03-22</td>
-                            <td class="actions">
-                                <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
-                                <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>owner@alafia.com</td>
-                            <td>مالك</td>
-                            <td>2023-01-01</td>
-                            <td class="actions">
-                                <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
         </div>
     </div>
@@ -1396,34 +1469,45 @@
             return deviceType;
         }
         
+        // تحديد نوع المستخدم
+        function selectLoginType(userType) {
+            const adminType = document.getElementById('admin-type');
+            const ownerType = document.getElementById('owner-type');
+            
+            if (userType === 'admin') {
+                adminType.classList.add('active');
+                ownerType.classList.remove('active');
+            } else {
+                ownerType.classList.add('active');
+                adminType.classList.remove('active');
+            }
+        }
+        
         // عرض رسالة تسجيل الدخول
         function showLoginMessage(message, type) {
             const messageDiv = document.getElementById('login-message');
             messageDiv.textContent = message;
-            messageDiv.className = 'login-message';
+            messageDiv.className = 'alert';
             
             if (type === 'success') {
                 messageDiv.classList.add('alert-success');
             } else if (type === 'error') {
                 messageDiv.classList.add('alert-error');
-            } else {
-                messageDiv.classList.add('alert-warning');
             }
         }
         
-        // تبديل بين واجهة تسجيل الدخول والواجهة الرئيسية
+        // تسجيل الدخول
         function login() {
-            const username = document.getElementById('admin-username').value.trim();
-            const password = document.getElementById('admin-password').value;
-            const loginType = document.getElementById('login-type').value;
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
             const deviceInfo = document.getElementById('device-info');
+            const userType = document.querySelector('.login-type.active').id;
             
             // تحديث معلومات الجهاز
-            deviceInfo.innerHTML = `<i class="fas fa-mobile-alt"></i> تسجيل الدخول من: ${getDeviceInfo()}`;
+            deviceInfo.innerHTML = `<i class="fas fa-info-circle"></i> تسجيل الدخول من: ${getDeviceInfo()}`;
             
             // التحقق من صحة المستخدم
-            if (loginType === 'owner' && username === 'owner' && password === users.owner.password) {
-                // تسجيل دخول المالك
+            if (userType === 'owner-type' && username === 'owner' && password === users.owner.password) {
                 showLoginMessage('تم تسجيل دخول المالك بنجاح', 'success');
                 setTimeout(() => {
                     document.getElementById('auth-container').style.display = 'none';
@@ -1432,8 +1516,7 @@
                     document.getElementById('welcome-text').textContent = `مرحباً بك يا مالك النظام في نظام جامع العافية`;
                 }, 1000);
             } 
-            else if (loginType === 'admin' && users[username] && password === users[username].password) {
-                // تسجيل دخول المشرف
+            else if (userType === 'admin-type' && users[username] && password === users[username].password) {
                 showLoginMessage(`تم تسجيل دخول المشرف ${users[username].name} بنجاح`, 'success');
                 setTimeout(() => {
                     document.getElementById('auth-container').style.display = 'none';
@@ -1451,10 +1534,10 @@
         function logout() {
             document.getElementById('auth-container').style.display = 'block';
             document.getElementById('app-container').style.display = 'none';
-            document.getElementById('admin-username').value = '';
-            document.getElementById('admin-password').value = '';
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
             document.getElementById('login-message').textContent = '';
-            document.getElementById('login-message').className = 'login-message';
+            document.getElementById('login-message').className = 'alert';
         }
         
         // تبديل بين التبويبات
@@ -1527,18 +1610,6 @@
             }
         }
         
-        // تبديل حقول تسجيل الدخول
-        function toggleLoginFields() {
-            const loginType = document.getElementById('login-type').value;
-            const adminSection = document.getElementById('admin-login-section');
-            
-            if(loginType === 'owner') {
-                adminSection.style.display = 'none';
-            } else {
-                adminSection.style.display = 'block';
-            }
-        }
-        
         // تهيئة النظام
         document.addEventListener('DOMContentLoaded', function() {
             // تعيين التاريخ الحالي لحقول التاريخ
@@ -1552,9 +1623,6 @@
             if(document.getElementById('report-date')) {
                 document.getElementById('report-date').value = currentMonth;
             }
-            
-            // عرض معلومات الجهاز
-            document.getElementById('device-info').innerHTML = `<i class="fas fa-mobile-alt"></i> تسجيل الدخول من: ${getDeviceInfo()}`;
         });
     </script>
 </body>
