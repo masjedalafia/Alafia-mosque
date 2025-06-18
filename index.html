@@ -10,6 +10,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
+        /* أنماط CSS المطلوبة - تم تحديثها */
         :root {
             --primary-color: #1a5f7a;
             --secondary-color: #57c5b6;
@@ -956,6 +957,144 @@
                 justify-content: center;
             }
         }
+        
+        /* أنماط جديدة لحل المشاكل */
+        .student-group-filter {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .group-student-list {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: var(--border-radius);
+            border: 1px solid #eee;
+        }
+        
+        .group-student-item {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .group-student-item:last-child {
+            border-bottom: none;
+        }
+        
+        .followup-group-container {
+            margin-bottom: 20px;
+        }
+        
+        .group-student-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .student-detail-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+        
+        .modal-content {
+            background: white;
+            width: 100%;
+            max-width: 700px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 30px;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--danger-color);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+        
+        .student-detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .student-detail-section {
+            margin-bottom: 25px;
+        }
+        
+        .student-detail-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .student-detail-value {
+            font-size: 1.05rem;
+            padding: 5px 0;
+        }
+        
+        .student-history-table {
+            width: 100%;
+            margin-top: 15px;
+        }
+        
+        .student-history-table th {
+            background: var(--primary-color);
+            color: white;
+            padding: 10px;
+        }
+        
+        .student-history-table td {
+            padding: 8px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .admin-form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .admin-password-container {
+            position: relative;
+        }
+        
+        .password-toggle {
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #777;
+        }
     </style>
 </head>
 <body>
@@ -985,9 +1124,12 @@
                 <input type="text" id="username" placeholder="أدخل اسم المستخدم">
             </div>
             
-            <div class="form-group">
+            <div class="form-group admin-password-container">
                 <label for="password"><i class="fas fa-lock"></i> كلمة المرور:</label>
                 <input type="password" id="password" placeholder="أدخل كلمة المرور">
+                <span class="password-toggle" onclick="togglePasswordVisibility()">
+                    <i class="fas fa-eye"></i>
+                </span>
             </div>
             
             <div class="login-actions">
@@ -1093,6 +1235,14 @@
                 </div>
             </div>
             
+            <div class="student-group-filter">
+                <label for="student-group-filter">فلترة حسب المجموعة:</label>
+                <select id="student-group-filter" onchange="filterStudentsByGroup()">
+                    <option value="all">جميع المجموعات</option>
+                    <!-- سيتم تعبئته بالجافاسكريبت -->
+                </select>
+            </div>
+            
             <div class="buttons">
                 <button class="btn-primary" onclick="showAddStudentForm()">
                     <i class="fas fa-user-plus"></i> إضافة طالب جديد
@@ -1179,7 +1329,7 @@
                 </div>
                 <div class="form-group">
                     <label for="followup-group">المجموعة:</label>
-                    <select id="followup-group">
+                    <select id="followup-group" onchange="updateStudentsByGroup()">
                         <option value="">اختر مجموعة</option>
                         <!-- سيتم تعبئته بالجافاسكريبت -->
                     </select>
@@ -1306,6 +1456,21 @@
                     </button>
                 </div>
             </div>
+            
+            <h3>طلاب المجموعات</h3>
+            <div class="admin-section">
+                <div class="form-group">
+                    <label for="view-group-students">اختر مجموعة لعرض طلابها:</label>
+                    <select id="view-group-students" onchange="showGroupStudents()">
+                        <option value="">اختر مجموعة</option>
+                        <!-- سيتم تعبئته بالجافاسكريبت -->
+                    </select>
+                </div>
+                
+                <div id="group-students-container">
+                    <!-- سيتم تعبئته بالجافاسكريبت -->
+                </div>
+            </div>
         </div>
         
         <!-- التقارير والإحصائيات -->
@@ -1385,7 +1550,7 @@
             <div class="owner-section" id="admin-management">
                 <h3><i class="fas fa-users"></i> إدارة المشرفين</h3>
                 
-                <div class="form-grid">
+                <div class="admin-form-grid">
                     <div class="form-group">
                         <label for="new-admin-name">اسم المشرف الجديد:</label>
                         <input type="text" id="new-admin-name" placeholder="أدخل الاسم الكامل">
@@ -1394,9 +1559,19 @@
                         <label for="new-admin-email">البريد الإلكتروني:</label>
                         <input type="email" id="new-admin-email" placeholder="أدخل البريد الإلكتروني">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group admin-password-container">
                         <label for="new-admin-password">كلمة المرور:</label>
                         <input type="password" id="new-admin-password" placeholder="أدخل كلمة المرور">
+                        <span class="password-toggle" onclick="togglePasswordVisibility('new-admin-password')">
+                            <i class="fas fa-eye"></i>
+                        </span>
+                    </div>
+                    <div class="form-group admin-password-container">
+                        <label for="confirm-admin-password">تأكيد كلمة المرور:</label>
+                        <input type="password" id="confirm-admin-password" placeholder="أعد إدخال كلمة المرور">
+                        <span class="password-toggle" onclick="togglePasswordVisibility('confirm-admin-password')">
+                            <i class="fas fa-eye"></i>
+                        </span>
                     </div>
                 </div>
                 
@@ -1468,6 +1643,19 @@
         </div>
     </div>
     
+    <!-- نافذة تفاصيل الطالب -->
+    <div class="student-detail-modal" id="student-detail-modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-close" onclick="closeStudentModal()">
+                <i class="fas fa-times"></i>
+            </div>
+            <h2><i class="fas fa-user-graduate"></i> تفاصيل الطالب</h2>
+            <div id="student-detail-content">
+                <!-- سيتم تعبئته بالجافاسكريبت -->
+            </div>
+        </div>
+    </div>
+    
     <div class="floating-btn" onclick="scrollToTop()">
         <i class="fas fa-arrow-up"></i>
     </div>
@@ -1484,29 +1672,38 @@
             "التغابن والطلاق والتحريم والملك", "نوح والجن والمزمل والمدثر والقيامة"
         ];
         
-        let students = [
+        // تهيئة البيانات من localStorage أو استخدام القيم الافتراضية
+        let students = JSON.parse(localStorage.getItem('students')) || [
             { id: 1, name: "عمر أحمد", age: 15, groupId: 1, group: "المجموعة الأولى", evaluation: "excellent", current: "الجزء 28", startDate: "2023-01-10", phone: "0551234567", notes: "طالب مجتهد" },
             { id: 2, name: "محمد خالد", age: 14, groupId: 2, group: "المجموعة الثانية", evaluation: "very-good", current: "الجزء 15", startDate: "2023-02-15", phone: "0557654321", notes: "يحتاج متابعة" },
             { id: 3, name: "سارة عبدالله", age: 16, groupId: 1, group: "المجموعة الأولى", evaluation: "excellent", current: "الجزء 30", startDate: "2023-03-01", phone: "0551122334", notes: "متميزة في الحفظ" }
         ];
         
-        let groups = [
+        let groups = JSON.parse(localStorage.getItem('groups')) || [
             { id: 1, name: "المجموعة الأولى", description: "مجموعة متقدمة في الحفظ", supervisorId: 1, supervisor: "أحمد محمد" },
             { id: 2, name: "المجموعة الثانية", description: "مجموعة متوسطة في الحفظ", supervisorId: 2, supervisor: "سارة عبدالله" },
             { id: 3, name: "المجموعة الثالثة", description: "مجموعة مبتدئة في الحفظ", supervisorId: 3, supervisor: "محمد علي" }
         ];
         
-        let admins = [
+        let admins = JSON.parse(localStorage.getItem('admins')) || [
             { id: 1, name: "أحمد محمد", email: "ahmed@alafia.com", password: "admin123", joinDate: "2023-01-15" },
             { id: 2, name: "سارة عبدالله", email: "sara@alafia.com", password: "admin123", joinDate: "2023-03-22" },
             { id: 3, name: "محمد علي", email: "mohammed@alafia.com", password: "admin123", joinDate: "2023-05-10" }
         ];
         
-        let followups = [
+        let followups = JSON.parse(localStorage.getItem('followups')) || [
             { id: 1, studentId: 1, studentName: "عمر أحمد", part: "الجزء 28", pages: "1-3", evaluation: "excellent", date: "2023-10-05", notes: "الحفظ متقن والتلاوة جيدة جداً" },
             { id: 2, studentId: 2, studentName: "محمد خالد", part: "الجزء 15", pages: "4-6", evaluation: "very-good", date: "2023-10-05", notes: "يحتاج تحسين في مخارج الحروف" },
             { id: 3, studentId: 3, studentName: "سارة عبدالله", part: "الجزء 30", pages: "7-10", evaluation: "excellent", date: "2023-10-04", notes: "أداء ممتاز وحفظ متقن" }
         ];
+        
+        // حفظ البيانات في localStorage
+        function saveData() {
+            localStorage.setItem('students', JSON.stringify(students));
+            localStorage.setItem('groups', JSON.stringify(groups));
+            localStorage.setItem('admins', JSON.stringify(admins));
+            localStorage.setItem('followups', JSON.stringify(followups));
+        }
         
         // ===== تهيئة النظام =====
         document.addEventListener('DOMContentLoaded', function() {
@@ -1533,6 +1730,21 @@
             } else {
                 ownerType.classList.add('active');
                 adminType.classList.remove('active');
+            }
+        }
+        
+        function togglePasswordVisibility(fieldId = 'password') {
+            const passwordField = document.getElementById(fieldId);
+            const toggleIcon = passwordField.nextElementSibling.querySelector('i');
+            
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordField.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
             }
         }
         
@@ -1657,10 +1869,16 @@
             };
             
             students.push(newStudent);
+            saveData();
             renderStudentsTable();
             hideAddStudentForm();
             showMessage('students-message', `تم إضافة الطالب ${name} بنجاح`, 'success');
             updateStats();
+        }
+        
+        function filterStudentsByGroup() {
+            const groupId = document.getElementById('student-group-filter').value;
+            renderStudentsTable('', groupId);
         }
         
         function searchStudents() {
@@ -1672,14 +1890,24 @@
             renderStudentsTable();
         }
         
-        function renderStudentsTable(searchTerm = '') {
+        function renderStudentsTable(searchTerm = '', groupId = 'all') {
             const tableBody = document.getElementById('students-table-body');
             tableBody.innerHTML = '';
             
-            const filteredStudents = students.filter(student => 
-                student.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                student.group.toLowerCase().includes(searchTerm.toLowerCase())
-            );
+            let filteredStudents = students;
+            
+            // فلترة حسب البحث
+            if (searchTerm) {
+                filteredStudents = students.filter(student => 
+                    student.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                    student.group.toLowerCase().includes(searchTerm.toLowerCase())
+                );
+            }
+            
+            // فلترة حسب المجموعة
+            if (groupId && groupId !== 'all') {
+                filteredStudents = filteredStudents.filter(student => student.groupId == groupId);
+            }
             
             if (filteredStudents.length === 0) {
                 tableBody.innerHTML = `
@@ -1730,6 +1958,7 @@
                 if (index !== -1) {
                     const name = students[index].name;
                     students.splice(index, 1);
+                    saveData();
                     renderStudentsTable();
                     showMessage('students-message', `تم حذف الطالب ${name} بنجاح`, 'success');
                     updateStats();
@@ -1740,12 +1969,77 @@
         function viewStudent(id) {
             const student = students.find(s => s.id === id);
             if (student) {
-                // في تطبيق حقيقي سيتم توجيه المستخدم لصفحة تفاصيل الطالب
-                alert(`ستتم الآن معاينة بيانات الطالب: ${student.name}`);
+                const followupsForStudent = followups.filter(f => f.studentId === id);
+                
+                const content = `
+                    <div class="student-detail-grid">
+                        <div>
+                            <div class="student-detail-section">
+                                <div class="student-detail-title">المعلومات الشخصية</div>
+                                <div class="student-detail-value"><strong>الاسم:</strong> ${student.name}</div>
+                                <div class="student-detail-value"><strong>العمر:</strong> ${student.age}</div>
+                                <div class="student-detail-value"><strong>الهاتف:</strong> ${student.phone || 'غير متوفر'}</div>
+                                <div class="student-detail-value"><strong>المجموعة:</strong> ${student.group}</div>
+                                <div class="student-detail-value"><strong>تاريخ البدء:</strong> ${student.startDate}</div>
+                            </div>
+                            
+                            <div class="student-detail-section">
+                                <div class="student-detail-title">معلومات الحفظ</div>
+                                <div class="student-detail-value"><strong>التقييم الحالي:</strong> ${getEvaluationText(student.evaluation)}</div>
+                                <div class="student-detail-value"><strong>الجزء الحالي:</strong> ${student.current}</div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="student-detail-section">
+                                <div class="student-detail-title">ملاحظات</div>
+                                <div class="student-detail-value">${student.notes || 'لا توجد ملاحظات'}</div>
+                            </div>
+                            
+                            <div class="student-detail-section">
+                                <div class="student-detail-title">سجل المتابعة</div>
+                                ${followupsForStudent.length > 0 ? `
+                                    <table class="student-history-table">
+                                        <thead>
+                                            <tr>
+                                                <th>التاريخ</th>
+                                                <th>الجزء</th>
+                                                <th>الصفحات</th>
+                                                <th>التقييم</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            ${followupsForStudent.map(f => `
+                                                <tr>
+                                                    <td>${f.date}</td>
+                                                    <td>${f.part}</td>
+                                                    <td>${f.pages}</td>
+                                                    <td>${getEvaluationText(f.evaluation)}</td>
+                                                </tr>
+                                            `).join('')}
+                                        </tbody>
+                                    </table>
+                                ` : '<p>لا توجد سجلات متابعة لهذا الطالب</p>'}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                document.getElementById('student-detail-content').innerHTML = content;
+                document.getElementById('student-detail-modal').style.display = 'flex';
             }
         }
         
+        function closeStudentModal() {
+            document.getElementById('student-detail-modal').style.display = 'none';
+        }
+        
         // ===== المتابعة اليومية =====
+        function updateStudentsByGroup() {
+            const groupId = document.getElementById('followup-group').value;
+            populateStudentsDropdownByGroup('followup-student', groupId);
+        }
+        
         function saveFollowup() {
             const studentId = document.getElementById('followup-student').value;
             const part = document.getElementById('followup-part').value;
@@ -1774,6 +2068,7 @@
             };
             
             followups.push(newFollowup);
+            saveData();
             renderFollowupsHistory();
             renderRecentFollowups();
             
@@ -1860,6 +2155,7 @@
                 const index = followups.findIndex(f => f.id === id);
                 if (index !== -1) {
                     followups.splice(index, 1);
+                    saveData();
                     renderFollowupsHistory();
                     renderRecentFollowups();
                 }
@@ -1889,6 +2185,7 @@
             };
             
             groups.push(newGroup);
+            saveData();
             renderGroupsList();
             
             // إعادة تعيين النموذج
@@ -1941,6 +2238,7 @@
             if (student && group) {
                 student.groupId = groupId;
                 student.group = group.name;
+                saveData();
                 renderStudentsTable();
                 alert(`تم ربط الطالب ${student.name} بمجموعة ${group.name} بنجاح`);
             }
@@ -1959,6 +2257,7 @@
                 if (index !== -1) {
                     const name = groups[index].name;
                     groups.splice(index, 1);
+                    saveData();
                     renderGroupsList();
                     
                     // إزالة المجموعة من الطلاب
@@ -1972,6 +2271,43 @@
                     alert(`تم حذف المجموعة ${name} بنجاح`);
                 }
             }
+        }
+        
+        function showGroupStudents() {
+            const groupId = document.getElementById('view-group-students').value;
+            const container = document.getElementById('group-students-container');
+            
+            if (!groupId) {
+                container.innerHTML = '';
+                return;
+            }
+            
+            const group = groups.find(g => g.id == groupId);
+            const groupStudents = students.filter(s => s.groupId == groupId);
+            
+            if (groupStudents.length === 0) {
+                container.innerHTML = `<div class="empty-state"><i class="fas fa-user-slash"></i> لا يوجد طلاب في هذه المجموعة</div>`;
+                return;
+            }
+            
+            let content = `<h3>طلاب مجموعة ${group.name}</h3>`;
+            content += `<div class="group-student-list">`;
+            
+            groupStudents.forEach(student => {
+                content += `
+                    <div class="group-student-item">
+                        <div>${student.name} (${student.age} سنة)</div>
+                        <div class="group-student-actions">
+                            <button class="action-btn btn-primary" onclick="viewStudent(${student.id})">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            content += `</div>`;
+            container.innerHTML = content;
         }
         
         // ===== التقارير والإحصائيات =====
@@ -2046,9 +2382,15 @@
             const name = document.getElementById('new-admin-name').value;
             const email = document.getElementById('new-admin-email').value;
             const password = document.getElementById('new-admin-password').value;
+            const confirmPassword = document.getElementById('confirm-admin-password').value;
             
-            if (!name || !email || !password) {
+            if (!name || !email || !password || !confirmPassword) {
                 alert('الرجاء ملء جميع الحقول المطلوبة');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                alert('كلمتا المرور غير متطابقتين');
                 return;
             }
             
@@ -2061,12 +2403,14 @@
             };
             
             admins.push(newAdmin);
+            saveData();
             renderAdminsTable();
             
             // إعادة تعيين النموذج
             document.getElementById('new-admin-name').value = '';
             document.getElementById('new-admin-email').value = '';
             document.getElementById('new-admin-password').value = '';
+            document.getElementById('confirm-admin-password').value = '';
             
             alert('تم إضافة المشرف بنجاح');
         }
@@ -2095,11 +2439,23 @@
                     <td>${admin.joinDate}</td>
                     <td class="actions">
                         <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
-                        <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
+                        <button class="action-btn delete-btn" onclick="deleteAdmin(${admin.id})"><i class="fas fa-trash"></i></button>
                     </td>
                 `;
                 tableBody.appendChild(row);
             });
+        }
+        
+        function deleteAdmin(id) {
+            if (confirm('هل أنت متأكد من رغبتك في حذف هذا المشرف؟')) {
+                const index = admins.findIndex(a => a.id === id);
+                if (index !== -1) {
+                    admins.splice(index, 1);
+                    saveData();
+                    renderAdminsTable();
+                    alert('تم حذف المشرف بنجاح');
+                }
+            }
         }
         
         function saveEvaluationSettings() {
@@ -2107,11 +2463,60 @@
         }
         
         function backupDatabase() {
+            const backup = {
+                students: students,
+                groups: groups,
+                admins: admins,
+                followups: followups,
+                date: new Date().toISOString()
+            };
+            
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backup));
+            const downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href", dataStr);
+            downloadAnchorNode.setAttribute("download", `backup-alafia-${new Date().toISOString().split('T')[0]}.json`);
+            document.body.appendChild(downloadAnchorNode);
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+            
             alert('تم إنشاء نسخة احتياطية بنجاح');
         }
         
         function restoreDatabase() {
-            alert('تم استعادة النسخة الاحتياطية بنجاح');
+            const fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.accept = '.json';
+            
+            fileInput.onchange = e => {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                
+                reader.onload = function(event) {
+                    try {
+                        const backup = JSON.parse(event.target.result);
+                        
+                        if (backup.students && backup.groups && backup.admins && backup.followups) {
+                            students = backup.students;
+                            groups = backup.groups;
+                            admins = backup.admins;
+                            followups = backup.followups;
+                            
+                            saveData();
+                            updateUI();
+                            alert('تم استعادة النسخة الاحتياطية بنجاح');
+                        } else {
+                            alert('ملف النسخة الاحتياطية غير صالح');
+                        }
+                    } catch (error) {
+                        alert('خطأ في قراءة ملف النسخة الاحتياطية');
+                        console.error(error);
+                    }
+                };
+                
+                reader.readAsText(file);
+            };
+            
+            fileInput.click();
         }
         
         // ===== وظائف مساعدة =====
@@ -2127,11 +2532,15 @@
             });
         }
         
-        function populateStudentsDropdown(dropdownId) {
+        function populateStudentsDropdownByGroup(dropdownId, groupId) {
             const select = document.getElementById(dropdownId);
             select.innerHTML = '<option value="">اختر طالب</option>';
             
-            students.forEach(student => {
+            if (!groupId) return;
+            
+            const groupStudents = students.filter(s => s.groupId == groupId);
+            
+            groupStudents.forEach(student => {
                 const option = document.createElement('option');
                 option.value = student.id;
                 option.textContent = student.name;
@@ -2282,13 +2691,20 @@
             renderTopStudents();
             updateStats();
             
+            // تحديث القوائم المنسدلة
             populateGroupsDropdown('student-group');
             populateGroupsDropdown('followup-group');
             populateGroupsDropdown('assign-group');
-            populateStudentsDropdown('followup-student');
-            populateStudentsDropdown('assign-student');
+            populateGroupsDropdown('student-group-filter');
+            populateGroupsDropdown('view-group-students');
             populateAdminsDropdown('group-supervisor');
             populatePartsDropdown();
+            
+            // تحديث قائمة الطلاب حسب المجموعة في المتابعة
+            const followupGroup = document.getElementById('followup-group').value;
+            if (followupGroup) {
+                populateStudentsDropdownByGroup('followup-student', followupGroup);
+            }
             
             createProgressChart();
         }
